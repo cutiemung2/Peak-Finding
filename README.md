@@ -1,5 +1,5 @@
 # Peak Finding
-</hr>
+<br />
 
 
 ## Peak이란?
@@ -16,8 +16,7 @@ i>=h 이면 peak이다.
 
 위의 Peak의 규칙에서 알 수 있듯이 하나의 배열안에는 두개 이상의 Peak이 존재 할 수 있다.
 
-
-
+<br />
 
 ## 목표
 
@@ -27,6 +26,8 @@ i>=h 이면 peak이다.
 
 
 ## 1차원 배열에서의 Peak Finding
+
+<br />
 
 ### 1. 직관적인 방법
 
@@ -46,9 +47,7 @@ def straightforward_1D(self,input_numbers):
     return input_numbers[length-1]
 ```
 
-
-End with an example of getting some data out of the system or using it for a little demo
-
+<br />
 
 ### 2. 좀 더 효율적인 방법 - Divide and Conquer
 
@@ -87,7 +86,7 @@ def div_and_conq_1D(self, input_numbers):
 
 ![1d](https://user-images.githubusercontent.com/35156601/35719949-03303ecc-082f-11e8-8ff7-577357434b2e.jpg)
 
-
+<br />
 
 ## 2차원 배열에서의 Peak Finding
 
@@ -96,6 +95,7 @@ def div_and_conq_1D(self, input_numbers):
 
 ![2dpeak](https://user-images.githubusercontent.com/35156601/35719978-24cc8aa4-082f-11e8-8119-bf6dda2acfd3.JPG)
 
+<br />
 
 ### 1. 직관적인 방법 (Greedy Ascent)
 직관적인 방법으로는 첫번째 인덱스부터 마지막인덱스까지 하나하나 비교하는 방법이 있다.
@@ -129,6 +129,7 @@ def straightforward_2D(self,input_numbers):
     print("logic error!")
 ```
 
+<br />
 
 ### 2. 좀 더 효율적인 방법 - Divide and Conquer
 
@@ -140,12 +141,14 @@ n개의 행(row)과 m개의 열(col)을 가지는 배열이 있다고 하자.
 우선, 가운데에 있는 열을 선택한다. m/2번째 열이 되겠다.
 
 ![fake1](https://user-images.githubusercontent.com/35156601/35720112-b3b69f3e-082f-11e8-8a5f-a1a4e27cc366.JPG)
+<br />
 
 해당 m/2번째 열을 하나의 1차원 배열로 보고 그 안에서 Peak을 찾는다.
 1차원 Peak Finding을 그대로 적용하면 될 것이다.
 
 ![fake2](https://user-images.githubusercontent.com/35156601/35720125-c3e345a6-082f-11e8-8df4-01494d9e03a5.JPG)
 
+<br />
 열에서 Peak이 찾아지면, 해당 값이 속해있는 행(row)을 선택하여 그 안에서 또 다시 1차원 Peak Finding을 진행한다.
 
 ![fake3](https://user-images.githubusercontent.com/35156601/35720131-c66d970e-082f-11e8-9b6f-81b2db8992e3.JPG)
@@ -156,14 +159,20 @@ n개의 행(row)과 m개의 열(col)을 가지는 배열이 있다고 하자.
 
 위 방법의 단점을 보완하여 조금만 바꿔보면 괜찮은 알고리즘을 얻을 수 있다.
 
+- - - - - - - -
+
 ![real3](https://user-images.githubusercontent.com/35156601/35720164-e251a834-082f-11e8-9c55-31910e35ca43.JPG)
 
 먼저, 기존 방식대로 열의 정 중앙을 잡는다.
 열을 하나의 1차원 배열로 생각하고 가장 큰 값을 찾는다. Peak을 찾는것이아니라 최댓값을 찾는다.
 
+<br />
+
 ![real1](https://user-images.githubusercontent.com/35156601/35720165-e28d8534-082f-11e8-96fe-9d8fe2f4ad63.JPG)
 
 최댓값과 양옆을 비교하여 더 큰 값이 있다면 해당 방향으로 탐색 열을 이동시킨다.
+
+<br />
 
 ![real2](https://user-images.githubusercontent.com/35156601/35720167-e2bc215a-082f-11e8-8601-8a49ae8395e4.JPG)
 
@@ -198,7 +207,7 @@ def div_and_conq_2D(self, input_numbers):
 
 ![2d](https://user-images.githubusercontent.com/35156601/35720200-039ff838-0830-11e8-904b-c8e38fd2f5e3.jpg)
 
-
+<br />
 
 그런데, 왜 특정 열에서 하나의 값을 선택 할 때, Peak이 아닌 최댓값을 찾아야 할까? 
 아래의 경우와 같이 운이 좋지 않으면 무한루프에 빠지게된다.
@@ -210,40 +219,3 @@ def div_and_conq_2D(self, input_numbers):
 
 열에서 Peak을 선정할 경우 최종 Peak을 찾지 못하고 무한루프에 빠지게 된다.
 그렇기 때문에 현재 열의 최댓값을 선택함으로써, 다음 열을 처리 할 때 이전 열의 값이 더 커서 되돌아오는 상황을 방지 할 수 있다.
-
-
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
-
