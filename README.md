@@ -7,9 +7,6 @@
 다음과 같은 1차원 배열이 있다고 하자.
 
 ![1d_array](https://user-images.githubusercontent.com/35156601/35719571-5f80741e-082d-11e8-9da1-7594e98ab093.JPG)
-</hr>
-</hr>
-
 
 
 그러면 Peak은 다음을 뜻한다.
@@ -18,6 +15,8 @@
 i>=h 이면 peak이다.
 
 위의 Peak의 규칙에서 알 수 있듯이 하나의 배열안에는 두개 이상의 Peak이 존재 할 수 있다.
+
+
 
 
 ## 목표
@@ -139,6 +138,79 @@ def straightforward_2D(self,input_numbers):
 n개의 행(row)과 m개의 열(col)을 가지는 배열이 있다고 하자.
 
 우선, 가운데에 있는 열을 선택한다. m/2번째 열이 되겠다.
+
+![fake1](https://user-images.githubusercontent.com/35156601/35720112-b3b69f3e-082f-11e8-8a5f-a1a4e27cc366.JPG)
+
+해당 m/2번째 열을 하나의 1차원 배열로 보고 그 안에서 Peak을 찾는다.
+1차원 Peak Finding을 그대로 적용하면 될 것이다.
+
+![fake2](https://user-images.githubusercontent.com/35156601/35720125-c3e345a6-082f-11e8-8df4-01494d9e03a5.JPG)
+
+열에서 Peak이 찾아지면, 해당 값이 속해있는 행(row)을 선택하여 그 안에서 또 다시 1차원 Peak Finding을 진행한다.
+
+![fake3](https://user-images.githubusercontent.com/35156601/35720131-c66d970e-082f-11e8-9b6f-81b2db8992e3.JPG)
+
+행에서 얻어진 Peak을 최종적인 Peak으로 설정한다.
+
+언뜻보면 그럴싸하게 보일 수도 있겠다. 하지만, 최종 선정된 위치의 위, 아래 값이 해당 Peak보다 크지 않을 거라는 보장이 없다.
+
+위 방법의 단점을 보완하여 조금만 바꿔보면 괜찮은 알고리즘을 얻을 수 있다.
+
+![real3](https://user-images.githubusercontent.com/35156601/35720164-e251a834-082f-11e8-9c55-31910e35ca43.JPG)
+
+먼저, 기존 방식대로 열의 정 중앙을 잡는다.
+열을 하나의 1차원 배열로 생각하고 가장 큰 값을 찾는다. Peak을 찾는것이아니라 최댓값을 찾는다.
+
+![real1](https://user-images.githubusercontent.com/35156601/35720165-e28d8534-082f-11e8-96fe-9d8fe2f4ad63.JPG)
+
+최댓값과 양옆을 비교하여 더 큰 값이 있다면 해당 방향으로 탐색 열을 이동시킨다.
+
+![real2](https://user-images.githubusercontent.com/35156601/35720167-e2bc215a-082f-11e8-8601-8a49ae8395e4.JPG)
+
+이동 된 열에서 또 다시 최댓값을 찾고 양옆과 비교하는 작업을 반복한다. (사실 한쪽만 비교해도 상관없다)
+양 옆의 값이 모두 자신보다 크지 않을 경우 Peak으로 선택한다.
+
+본인이 구현한 코드이다.
+
+```
+def div_and_conq_2D(self, input_numbers):
+    n, m = len(input_numbers), len(input_numbers[0]) # n,m = #row, #col
+    col = m//2
+    while True:
+        # 해당 열에서 최댓값 찾기
+        max_row = 0
+        for row in range(1,n):
+            if input_numbers[max_row][col] < input_numbers[row][col]:
+                max_row = row
+          
+        # 최대 row에서 양 옆과 비교하기
+        if col>0 and input_numbers[max_row][col-1] > input_numbers[max_row][col]:
+            col -= 1
+        elif col<m-1 and input_numbers[max_row][col+1] > input_numbers[max_row][col]:
+            col += 1
+        else:
+            return input_numbers[max_row][col]
+    print("logic error!")
+```
+
+위 과정을 따르면 처음에 소개했던 잘못된 알고리즘의 허점을 커버할 수 있다.
+Θ(nlogm)의 시간복잡도를 보인다.
+
+![2d](https://user-images.githubusercontent.com/35156601/35720200-039ff838-0830-11e8-904b-c8e38fd2f5e3.jpg)
+
+
+
+그런데, 왜 특정 열에서 하나의 값을 선택 할 때, Peak이 아닌 최댓값을 찾아야 할까? 
+아래의 경우와 같이 운이 좋지 않으면 무한루프에 빠지게된다.
+
+![whymax](https://user-images.githubusercontent.com/35156601/35720223-12c50eb6-0830-11e8-8b23-ac0d512535b6.JPG)
+
+**빨간색은 각각의 열에서 1차원 Peak을 선정하여 탐색한 결과이고
+파란색은 각각의 열에서 최댓값을 선정하여 탐색한 결과이다.**
+
+열에서 Peak을 선정할 경우 최종 Peak을 찾지 못하고 무한루프에 빠지게 된다.
+그렇기 때문에 현재 열의 최댓값을 선택함으로써, 다음 열을 처리 할 때 이전 열의 값이 더 커서 되돌아오는 상황을 방지 할 수 있다.
+
 
 
 ## Deployment
