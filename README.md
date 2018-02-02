@@ -204,6 +204,7 @@ def div_and_conq_2D(self, input_numbers):
 
 위 과정을 따르면 처음에 소개했던 잘못된 알고리즘의 허점을 커버할 수 있다.
 Θ(nlogm)의 시간복잡도를 보인다.
+(아래 풀이에서 log(n)이 아니라 log(m)이 맞다, 그리고 맨 아래의 표는 신경쓰지 않아도 된다.)
 
 ![2d](https://user-images.githubusercontent.com/35156601/35720200-039ff838-0830-11e8-904b-c8e38fd2f5e3.jpg)
 
