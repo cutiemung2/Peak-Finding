@@ -9,6 +9,10 @@
 ![1d_array](https://user-images.githubusercontent.com/35156601/35719571-5f80741e-082d-11e8-9da1-7594e98ab093.JPG)
 
 
+
+
+
+
 그러면 Peak은 다음을 뜻한다.
  b>=a 이고 b>=c 이면 b는 peak이다.
 양 끝에 존재하는 요소 i의 경우에는 
