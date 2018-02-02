@@ -3,7 +3,8 @@
 
 ## Peak이란?
 
-다음과 같은 1차원 배열이 있다고 하자.</hr>
+다음과 같은 1차원 배열이 있다고 하자.
+
 ![1d_array](https://user-images.githubusercontent.com/35156601/35719571-5f80741e-082d-11e8-9da1-7594e98ab093.JPG)
 
 
