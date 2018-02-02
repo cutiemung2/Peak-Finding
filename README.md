@@ -24,10 +24,10 @@ i>=h 이면 peak이다.
 입력은 1차원과 2차원 배열로 주어진다.
 
 
-### 1차원 배열에서의 Peak Finding
+## 1차원 배열에서의 Peak Finding
 
-<span style="color:red"> *1. 직관적인 방법*</span>
-<span style="color:blue">some *blue* text</span>.
+### 1. 직관적인 방법
+
 비교적 쉽게 생각할 수 있는 알고리즘이다.
 배열의 왼쪽에서 시작하여 비교를 통해 오른쪽으로 한칸씩 나아가는 방법이다.
 최악의 경우 n번의 비교연산을 진행하게 되어 Θ(n)의 시간복잡도를 보인다.
@@ -48,7 +48,7 @@ def straightforward_1D(self,input_numbers):
 End with an example of getting some data out of the system or using it for a little demo
 
 
-### <span style="color:red"> *2. 좀 더 효율적인 방법 - Divide and Conquer*</span>
+### 2. 좀 더 효율적인 방법 - Divide and Conquer
 
 더 빠른 알고리즘을 원한다면 조금은 더 복잡한 방법이 필요하다.
 
@@ -83,22 +83,60 @@ def div_and_conq_1D(self, input_numbers):
 직관적인 방법은 한번 비교할 때마다 탐색대상이 1개씩 줄어들었는데, 이 경우에는 한번 비교할 때마다 탐색 대상이 반으로 줄어드니
 데이터 양이 많을수록 빠른 속도를 보여준다.  Θ(log(n))의 시간복잡도를 가진다.
 
+![1d](https://user-images.githubusercontent.com/35156601/35719949-03303ecc-082f-11e8-8ff7-577357434b2e.jpg)
 
-### Break down into end to end tests
 
-Explain what these tests test and why
 
+## 2차원 배열에서의 Peak Finding
+
+2차원에서는 1차원 규칙이 확장된다.
+아래와 같은 2차원 배열이 존재할 때, a>= b, c, d, e이면 a는 Peak이다.
+
+![2dpeak](https://user-images.githubusercontent.com/35156601/35719978-24cc8aa4-082f-11e8-8119-bf6dda2acfd3.JPG)
+
+
+### 1. 직관적인 방법 (Greedy Ascent)
+직관적인 방법으로는 첫번째 인덱스부터 마지막인덱스까지 하나하나 비교하는 방법이 있다.
+또, 현재 상태에서 가장 큰 값을 쫒아가는 Greedy한 방법도 있을 수 있다.
+이 외에도 생각할 수 있는 방법은 여러개가 있는데, 여기서는 그 중 하나를 사용할 것이다.
+
+
+알고리즘 순서는 다음과 같다.
+· 배열상에서 임의의 위치를 잡는다. 인접한 셀 4개 중에서 자신보다 큰 값이 발견되면 그 곳으로 위치를 옮긴다.
+· 셀 4개중에 자신보다 큰 값이 없으면 그 값이 Peak이다.
+
+배열의 크기가 n x m이라면 최악의 경우 n x m번의 비교과정을 거쳐야하므로 Θ(nm)의 시간복잡도를 보인다.
+
+본인이 작성한 코드다.
 ```
-Give an example
+def straightforward_2D(self,input_numbers):
+    n, m = len(input_numbers), len(input_numbers[0]) # n,m = #row, #col
+    row, col = n//2, m//2
+    
+    for _ in range(m*n):
+        if row>0 and input_numbers[row-1][col] > input_numbers[row][col]:
+            row = row-1
+        elif row<n-1 and input_numbers[row+1][col] > input_numbers[row][col]:
+            row = row+1
+        elif col>0 and input_numbers[row][col-1] > input_numbers[row][col]:
+            col = col-1
+        elif col<m-1 and input_numbers[row][col+1] > input_numbers[row][col]:
+            col = col+1
+        else:    
+            return input_numbers[row][col]
+    print("logic error!")
 ```
 
-### And coding style tests
 
-Explain what these tests test and why
+### 2. 좀 더 효율적인 방법 - Divide and Conquer
 
-```
-Give an example
-```
+2차원 배열에서 역시, 1차원과 비슷한 방식으로 연산횟수를 대폭 줄일 수 있다.
+1차원에서 사용했던 Divide and Conquer 알고리즘을 살짝만 바꾸어 2차원에 적용시켜보겠다.
+
+n개의 행(row)과 m개의 열(col)을 가지는 배열이 있다고 하자.
+
+우선, 가운데에 있는 열을 선택한다. m/2번째 열이 되겠다.
+
 
 ## Deployment
 
